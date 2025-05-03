@@ -9,4 +9,7 @@ pip install -r requirements.txt
     - Fist: Bass
     - Index up: Mid
     - Pinky up: Treble
-- Right hand control gain: distance between thumb and index finger
+    - All fingers up: All
+- Right hand control gain:
+  - If frequency selected: distance between thumb and index finger
+  - If overall volume selected: rotation of the wrist
