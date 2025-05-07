@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1100</width>
+    <height>831</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #F5EBE0</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="insertButton">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    color: #4A4E69;                      /* text color */
+    background-color: #E3D5CA;         
+	font-weight: bold;
+	font-size: 14px;
+	font-family: &quot;Poppins&quot;;
+	border-radius: 10px;
+	border: 2px solid #4A4E69;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Insert music</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="playButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>480</y>
+      <width>60</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #E3D5CA;         
+	border-radius: 30px; /* Half of width/height */
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 60px;
+    max-height: 60px;
+ 	qproperty-icon: url(:/newPrefix/playicon.png); 
+    qproperty-iconSize: 60px 60px;
+}
+
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>140</y>
+      <width>60</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+         </property>
+         <property name="text">
+          <string>Volume</string>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QSlider" name="verticalSlider">
+         <property name="styleSheet">
+          <string notr="true">QSlider::groove:vertical {
+    width: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:vertical {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    height: 12px;
+    width: 10px;
+    margin: 0 -5px;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:vertical {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+
+QSlider::add-page:vertical {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QLabel" name="label_17">
+       <property name="styleSheet">
+        <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+       </property>
+       <property name="text">
+        <string>Value</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>550</y>
+      <width>831</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    color: #4A4E69;                      /* text color */
+    background-color: #E3D5CA;         
+	font-weight: bold;
+	font-size: 13
+px;
+	font-family: &quot;Poppins&quot;;
+	border-radius: 10px;
+	border: 2px solid #4A4E69;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>   High Pass   </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    color: #4A4E69;                      /* text color */
+    background-color: #E3D5CA;         
+	font-weight: bold;
+	font-size: 13px;
+	font-family: &quot;Poppins&quot;;
+	border-radius: 10px;
+	border: 2px solid #4A4E69;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>   Band Pass   </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    color: #4A4E69;                      /* text color */
+    background-color: #E3D5CA;         
+	font-weight: bold;
+	font-size: 13px;
+	font-family: &quot;Poppins&quot;;
+	border-radius: 10px;
+	border: 2px solid #4A4E69;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>   Low Pass   </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Frequency (Hz):       </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; 
+</string>
+           </property>
+           <property name="text">
+            <string>Gain (dB):</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; 
+</string>
+           </property>
+           <property name="text">
+            <string>Frequency (Hz):</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Gain (dB):</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Frequency (Hz):</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: semibold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; 
+</string>
+           </property>
+           <property name="text">
+            <string>Gain (dB):</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QSlider" name="horizontalSlider">
+           <property name="styleSheet">
+            <string notr="true">QSlider::groove:horizontal {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    width: 10px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_2">
+           <property name="styleSheet">
+            <string notr="true">QSlider::groove:horizontal {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    width: 10px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_3">
+           <property name="styleSheet">
+            <string notr="true">QSlider::groove:horizontal {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    width: 10px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_4">
+           <property name="styleSheet">
+            <string notr="true">QSlider::groove:horizontal {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    width: 10px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_5">
+           <property name="styleSheet">
+            <string notr="true">QSlider::groove:horizontal {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    width: 10px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_6">
+           <property name="styleSheet">
+            <string notr="true">QSlider::groove:horizontal {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #4A4E69;
+    border: 1px solid #3e8e41;
+    width: 10px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #9A8C98;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+    background: #E3D5CA;
+    border-radius: 3px;
+}
+</string>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; 
+</string>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; 
+</string>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_12">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_13">
+           <property name="styleSheet">
+            <string notr="true">color: #4A4E69;  
+font-weight: bold;
+font-size: 14px;
+font-family: &quot;Poppins&quot;; </string>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGraphicsView" name="camdisplay">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>90</y>
+      <width>871</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGraphicsView {
+    border: 2px solid #22223B;      /* Green border */
+    border-radius: 15px;            /* Rounded corners */
+}</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1100</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="img.qrc"/>
+ </resources>
+ <connections/>
+</ui>
