@@ -1,6 +1,6 @@
 class EQController:
     def __init__(self):
-        self.gains = {'low': 1.0, 'mid': 1.0, 'high': 1.0}
+        self.gains = {'bass': 1.0, 'mid': 1.0, 'treble': 1.0}
         self.selected_band = 'mid'
 
     def set_band(self, band):

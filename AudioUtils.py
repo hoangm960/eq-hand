@@ -13,8 +13,8 @@ def apply_eq(data, fs, gains):
     mid_b, mid_a = butter_bandpass(250, 4000, fs)
     high_b, high_a = butter_bandpass(4000, 18000, fs)
 
-    low = lfilter(low_b, low_a, data) * gains['low']
+    low = lfilter(low_b, low_a, data) * gains['bass']
     mid = lfilter(mid_b, mid_a, data) * gains['mid']
-    high = lfilter(high_b, high_a, data) * gains['high']
+    high = lfilter(high_b, high_a, data) * gains['treble']
 
     return low + mid + high

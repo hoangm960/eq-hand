@@ -9,7 +9,7 @@ class AudioPlayer:
     def __init__(self, filename, eq_controller):
         self.eq_controller = eq_controller
         self.audio = AudioSegment.from_mp3(
-            filename).set_Channels(1).set_frame_rate(44100)
+            filename).set_channels(1).set_frame_rate(44100)
         self.samples = np.array(self.audio.get_array_of_samples()).astype(
             np.float32) / 32768.0
         self.fs = 44100
