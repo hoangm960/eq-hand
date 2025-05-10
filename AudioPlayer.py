@@ -22,7 +22,6 @@ class AudioPlayer:
         if self.stop_playback or self.buffer_pos + frames > len(self.samples):
             outdata[:] = np.zeros((frames, 1))
             raise sd.CallbackStop()
-            return
 
         with self.buffer_lock:
             chunk = self.samples[self.buffer_pos:self.buffer_pos + frames]

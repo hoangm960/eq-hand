@@ -106,18 +106,25 @@ QPushButton:hover {
         <number>20</number>
        </property>
        <item>
-        <widget class="QGraphicsView" name="camdisplay">
-         <property name="minimumSize">
-          <size>
-           <width>700</width>
-           <height>300</height>
-          </size>
+        <widget class="QLabel" name="cam_display">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">QGraphicsView {
-    border: 2px solid #22223B;      /* Green border */
-    border-radius: 15px;            /* Rounded corners */
-}</string>
+          <string notr="true">border: 2px solid #22223B;
+border-radius: 15px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
