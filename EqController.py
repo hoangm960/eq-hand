@@ -9,8 +9,11 @@ class EQController:
     def set_gain(self, gain):
         self.gains[self.selected_band] = gain
 
-    def get_gains(self):
-        return self.gains
+    def set_gain(self, gain):
+        dB = -20 + (gain / 100.0) * 30
+        # Convert dB to gain multiplier
+        gain_multiplier = pow(10, dB / 20.0)
+        self.gains[self.selected_band] = gain_multiplier
 
     def get_selected_band(self):
         return self.selected_band

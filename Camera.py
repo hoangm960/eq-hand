@@ -1,10 +1,29 @@
+import math
 import cv2
+from cvzone.HandTrackingModule import HandDetector
+import numpy as np
+
 
 class Camera:
+    GESTURE = {
+        "bass": [0, 0, 0, 0, 0],
+        "mid": [0, 1, 0, 0, 0],
+        "treble": [0, 0, 0, 0, 1],
+        "all": [1, 1, 1, 1, 1],
+        "toggle": [1, 1, 0, 0, 1]  # gesture to turn on/off adjustment mode
+    }
+
+    EQ_RANGE = [0, 100]
+    VOLUME_RANGE = (-50, 50)
+    INITIAL_VOLUME_ANGLE = 60
 
     def __init__(self, camera):
         self.camera = camera
-        self.vp = None
+        self.detector = HandDetector(detectionCon=0.7, maxHands=2)
+
+        self.adjust_mode = False
+        self.prev_toggle_state = False
+        self.toggle_cooldown = 0
 
     def open(self, width=720, height=480):
         self.vc = cv2.VideoCapture(self.camera)
@@ -22,13 +41,68 @@ class Camera:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             if negative:
                 frame = cv2.bitwise_not(frame)
+
+            self.current_frame = frame
             return frame
 
-    def read_gray(self, negative=False):
-        rval, frame = self.vc.read()
-        if frame is not None:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
-            if negative:
-                frame = cv2.bitwise_not(frame)
-            return frame
+    def hand_detection(self, frame):
+        hands, frame_copy = self.detector.findHands(frame)
+
+        freq_band = "none"
+        gain = 0.5
+        volume = 0.5
+
+        if len(hands) == 2:
+            hand1, hand2 = hands
+            if hand1["center"][0] < hand2["center"][0]:
+                left_hand = hand2
+                right_hand = hand1
+            else:
+                left_hand = hand1
+                right_hand = hand2
+
+            fingers_left = self.detector.fingersUp(left_hand)
+            # == Adjustment Mode ==
+            if fingers_left == self.GESTURE["toggle"]:
+                if not self.prev_toggle_state and self.toggle_cooldown == 0:
+                    self.adjust_mode = not self.adjust_mode
+                    self.toggle_cooldown = 20  # frames to prevent spamming toggle
+                self.prev_toggle_state = True
+            else:
+                self.prev_toggle_state = False
+
+            if self.toggle_cooldown > 0:
+                self.toggle_cooldown -= 1
+
+            # == EQ and Volume Control ==
+
+            if self.adjust_mode:
+                for control, gesture in self.GESTURE.items():
+                    if fingers_left == gesture:
+                        freq_band = control
+
+                        if control == "all":  # adjust the volume
+                            wrist = np.array(right_hand['lmList'][0])
+                            middle_tip = np.array(right_hand['lmList'][12])
+
+                            dx = middle_tip[0] - wrist[0]
+                            dy = middle_tip[1] - wrist[1]
+                            angle = - \
+                                math.degrees(math.atan2(dy, dx)) - \
+                                self.INITIAL_VOLUME_ANGLE
+                            angle_clamped = max(
+                                self.VOLUME_RANGE[0], min(self.VOLUME_RANGE[1], angle))
+
+                            volume = (
+                                angle_clamped - self.VOLUME_RANGE[0]) / (self.VOLUME_RANGE[1] - self.VOLUME_RANGE[0])
+
+                        else:  # adjust the eq
+                            distance, info, frame_copy = self.detector.findDistance(
+                                right_hand["lmList"][8][:-1],
+                                right_hand["lmList"][4][:-1],
+                                frame_copy
+                            )
+                            gain = max(self.EQ_RANGE[0], min(self.EQ_RANGE[1], int(distance * 0.5)))
+                        break
+
+        return frame_copy, freq_band, gain, volume
