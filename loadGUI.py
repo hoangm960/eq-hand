@@ -1,7 +1,12 @@
+import multiprocessing
+import threading
 from PyQt6 import uic
 from PyQt6.QtCore import QTimer
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog
 from PyQt6.QtGui import QPixmap, QImage
+
+from AudioPlayer import AudioPlayer
+from EqController import EQController
 
 
 class UI_Window(QMainWindow):
@@ -16,7 +21,16 @@ class UI_Window(QMainWindow):
 
         self.initialized = False
         self.initialize_button.clicked.connect(self.start)
-        # self.start()
+
+        self.audio_file = ""
+        self.eq_controller = EQController()
+        self.player = None
+        self.insert_button.clicked.connect(self.insertAudio)
+
+        self.is_played = False
+        self.play_thread = None
+        self.play_button.clicked.connect(self.playAudio)
+
     def start(self):
         if self.initialized:
             self.initialized = False
@@ -31,6 +45,24 @@ class UI_Window(QMainWindow):
 
         self.timer.start(int(1000/24))
 
+    def insertAudio(self):
+        self.audio_file = QFileDialog.getOpenFileName(self, 'Open file',
+         'c:\\',"Audio files (*.mp3)")[0]
+        if not self.audio_file:
+            return
+
+        self.player = AudioPlayer(self.audio_file, self.eq_controller)
+
+    def playAudio(self):
+        if not self.player:
+            return
+
+        if self.is_played:
+            self.player.stop()
+        elif not self.play_thread:
+            self.play_thread = threading.Thread(target=self.player.play, daemon=True)
+            self.play_thread.start()
+        self.is_played = not self.is_played
 
     def nextFrameSlot(self):
         frame = self.camera.read()
@@ -39,7 +71,7 @@ class UI_Window(QMainWindow):
                 self.initialized = self.camera.initializeHandDetection(frame)
                 if self.initialized:
                     self.initialize_button.setText("ReInitialize?")
-            else:
+            elif self.player:
                 frame, freq_band, gain, volume, adjust_mode = self.camera.handDetection(
                     frame)
 
@@ -50,8 +82,14 @@ class UI_Window(QMainWindow):
 
                 if not freq_band in ["none", "toggle"]:
                     if freq_band == "all":
+                        self.player.set_volume(volume)
+                        self.player.get_volume()
+
                         self.volume_slider.setValue(int(volume*100))
                     else:
+                        self.eq_controller.set_band(freq_band)
+                        self.eq_controller.set_gain(gain)
+
                         UI_SLIDER_BANDS = {
                             "bass": self.low_gain_slider,
                             "mid": self.band_gain_slider,

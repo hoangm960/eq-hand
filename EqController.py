@@ -6,8 +6,8 @@ class EQController:
     def set_band(self, band):
         self.selected_band = band
 
-    def set_gain(self, gain):
-        self.gains[self.selected_band] = gain
+    def get_gains(self):
+        return self.gains
 
     def set_gain(self, gain):
         dB = -20 + (gain / 100.0) * 30

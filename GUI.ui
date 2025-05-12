@@ -293,7 +293,7 @@ font-family: &quot;Poppins&quot;; </string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="playButton">
+        <widget class="QPushButton" name="play_button">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -370,7 +370,7 @@ font-family: &quot;Poppins&quot;; </string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="insertButton">
+        <widget class="QPushButton" name="insert_button">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
