@@ -2,7 +2,6 @@ from pydub import AudioSegment
 import sounddevice as sd
 import numpy as np
 import threading
-import AudioUtils as au
 
 
 class AudioPlayer:
@@ -36,7 +35,7 @@ class AudioPlayer:
 
     def set_volume(self, new_volume):
         with self.buffer_lock:
-            self.volume = max(0.0, min(new_volume, 2.0))
+            self.volume = max(0.0, min(new_volume, 1.0))
 
     def get_volume(self):
         return self.volume
