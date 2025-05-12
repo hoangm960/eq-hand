@@ -24,6 +24,7 @@ class Camera:
         self.adjust_mode = False
         self.prev_toggle_state = False
         self.toggle_cooldown = 0
+        self.right_hand_range = [0, 0]
 
     def open(self, width=720, height=480):
         self.vc = cv2.VideoCapture(self.camera)
@@ -45,7 +46,47 @@ class Camera:
             self.current_frame = frame
             return frame
 
-    def hand_detection(self, frame):
+    def initializeHandDetection(self, frame):
+        hands, frame_copy = self.detector.findHands(frame)
+
+        INIT_CONTROL_GESTURES = {
+            "[1, 1, 1, 1, 1]": "max",
+            "[1, 0, 0, 0, 0]": "min",
+            "[0, 0, 0, 0, 0]": "done"
+        }
+
+        if len(hands) == 2:
+            hand1, hand2 = hands
+            if hand1["center"][0] < hand2["center"][0]:
+                left_hand = hand2
+                right_hand = hand1
+            else:
+                left_hand = hand1
+                right_hand = hand2
+
+            fingers_left = self.detector.fingersUp(left_hand)
+            if str(fingers_left) not in INIT_CONTROL_GESTURES.keys():
+                return False
+
+            gesture = INIT_CONTROL_GESTURES[str(fingers_left)]
+
+            if gesture == "done":
+                return True
+
+            distance, info, frame_copy = self.detector.findDistance(
+                right_hand["lmList"][8][:-1],
+                right_hand["lmList"][4][:-1],
+                frame_copy
+            )
+
+            if gesture == "min":
+                self.right_hand_range[0] = distance
+            else:
+                self.right_hand_range[1] = distance
+
+        return False
+
+    def handDetection(self, frame):
         hands, frame_copy = self.detector.findHands(frame)
 
         freq_band = "none"
@@ -66,7 +107,7 @@ class Camera:
             if fingers_left == self.GESTURE["toggle"]:
                 if not self.prev_toggle_state and self.toggle_cooldown == 0:
                     self.adjust_mode = not self.adjust_mode
-                    self.toggle_cooldown = 20  # frames to prevent spamming toggle
+                    self.toggle_cooldown = 20
                 self.prev_toggle_state = True
             else:
                 self.prev_toggle_state = False
@@ -102,7 +143,8 @@ class Camera:
                                 right_hand["lmList"][4][:-1],
                                 frame_copy
                             )
-                            gain = max(self.EQ_RANGE[0], min(self.EQ_RANGE[1], int(distance * 0.5)))
+                            gain = self.EQ_RANGE[0]+((distance-self.right_hand_range[0])*(
+                                self.EQ_RANGE[1]-self.EQ_RANGE[0]))/(self.right_hand_range[1]-self.right_hand_range[0])
                         break
 
-        return frame_copy, freq_band, gain, volume
+        return frame_copy, freq_band, gain, volume, self.adjust_mode
