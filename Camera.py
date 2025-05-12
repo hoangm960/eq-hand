@@ -1,7 +1,11 @@
 import math
+import os
+import pickle
 import cv2
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
+
+CALIBRATION_FILE = "hand_range.calib"
 
 
 class Camera:
@@ -47,6 +51,11 @@ class Camera:
             return frame
 
     def initializeHandDetection(self, frame):
+        if os.path.exists("hand_range.calib"):
+            with open("hand_range.calib", "rb") as f:
+                self.right_hand_range = pickle.load(f)
+                return True
+
         hands, frame_copy = self.detector.findHands(frame)
 
         INIT_CONTROL_GESTURES = {
@@ -71,6 +80,8 @@ class Camera:
             gesture = INIT_CONTROL_GESTURES[str(fingers_left)]
 
             if gesture == "done":
+                with open(CALIBRATION_FILE, "wb") as f:
+                    pickle.dump(self.right_hand_range, f)
                 return True
 
             distance, info, frame_copy = self.detector.findDistance(

@@ -178,3 +178,4 @@ cython_debug/
 playlist/
 test/
 test*.*
+*.calib

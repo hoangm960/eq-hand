@@ -28,6 +28,8 @@ If it prints None, then FFmpeg is not installed or not on the system path.
 **To Adjust Volume and EQ Settings:**
 1. **Initialize Hand Detector**
    Press `Initialize Hand Detection` button in the top left
+   
+   _(If you've already initialized before, you can skip these steps or press `ReInitialize?` to reinitialize)_
       1. First put all fingers up ✋, extend the thumb and index finger of the right hand as far as possible.
       2. Hold the right hand, close all 4 fingers of the left hand except for the thumb 👍, then squeeze the right hand's thumb and index finger as close as possible 🤏.
       3. Now close the left thumb. The initialization is done.
