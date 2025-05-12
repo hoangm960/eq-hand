@@ -6,7 +6,6 @@ from PyQt6.QtGui import QPixmap, QImage
 
 from AudioPlayer import AudioPlayer
 from EqController import EQController
-import soundfile as sf
 
 
 class UI_Window(QMainWindow):
@@ -31,10 +30,14 @@ class UI_Window(QMainWindow):
         self.play_thread = None
         self.play_button.clicked.connect(self.playAudio)
 
+        self.volume_slider.valueChanged.connect(self.setVolume)
         self.high_freq_slider.valueChanged.connect(self.setHighFrequency)
+        self.high_gain_slider.valueChanged.connect(self.setHighGain)
         self.band_freq_slider.valueChanged.connect(self.setMidFrequency)
         self.band_bandwidth_slider.valueChanged.connect(self.setMidBandwidth)
+        self.band_gain_slider.valueChanged.connect(self.setMidGain)
         self.low_freq_slider.valueChanged.connect(self.setLowFrequency)
+        self.low_gain_slider.valueChanged.connect(self.setLowGain)
 
     def start(self):
         if self.initialized:
@@ -71,17 +74,53 @@ class UI_Window(QMainWindow):
             self.play_thread.start()
         self.is_played = not self.is_played
 
+    def setVolume(self, value):
+        if not self.player:
+            return
+
+        self.player.set_volume(value/100)
+
     def setHighFrequency(self, value):
+        if not self.eq_controller:
+            return
+
         self.eq_controller.set_high_cut(value)
 
+    def setHighGain(self, value):
+        if not self.eq_controller:
+            return
+
+        self.eq_controller.set_gain(high_db=value)
+
     def setMidFrequency(self, value):
+        if not self.eq_controller:
+            return
+
         self.eq_controller.set_mid_bandwidth(value)
 
     def setMidBandwidth(self, value):
+        if not self.eq_controller:
+            return
+
         self.eq_controller.set_mid_bandwidth(mid_bandwidth=value)
 
+    def setMidGain(self, value):
+        if not self.eq_controller:
+            return
+
+        self.eq_controller.set_gain(mid_db=value)
+
     def setLowFrequency(self, value):
+        if not self.eq_controller:
+            return
+
         self.eq_controller.set_low_cut(value)
+
+    def setLowGain(self, value):
+        if not self.eq_controller:
+            return
+
+        self.eq_controller.set_gain(low_db=value)
 
     def nextFrameSlot(self):
         frame = self.camera.read()
@@ -102,8 +141,6 @@ class UI_Window(QMainWindow):
                 if not freq_band in ["none", "toggle"]:
                     if freq_band == "all":
                         self.player.set_volume(volume)
-                        self.player.get_volume()
-
                         self.volume_slider.setValue(int(volume*100))
                     else:
                         gain_db = int(-20 + (gain / 100.0) * 30)
