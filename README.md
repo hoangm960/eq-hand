@@ -25,7 +25,6 @@ print(which("ffmpeg"))
 If it prints None, then FFmpeg is not installed or not on the system path.
 
 ## How to use
-
 **To Adjust Volume and EQ Settings:**
 1. **Initialize Hand Detector**
    Press `Initialize Hand Detection` button in the top left
