@@ -1,20 +1,40 @@
-from scipy.signal import butter, lfilter
+from scipy import signal
 
 
-def butter_bandpass(lowcut, highcut, fs, order=2):
-    nyq = 0.5 * fs
-    low = lowcut / nyq
-    high = highcut / nyq
-    return butter(order, [low, high], btype='band')
+class ThreeBandEQ:
+    def __init__(self, fs, low_cut=200.0, high_cut=2000.0, order=2):
+        self.fs = fs
+        self.low_cut = low_cut
+        self.high_cut = high_cut
+        self.order = order
 
+        # Design filters as second-order-sections for stability
+        # Low band: lowpass at low_cut
+        self.sos_low = signal.butter(order, low_cut, btype='low', fs=fs, output='sos')
+        # Mid band: bandpass between low_cut and high_cut
+        self.sos_mid = signal.butter(order, [low_cut, high_cut], btype='band', fs=fs, output='sos')
+        # High band: highpass at high_cut
+        self.sos_high = signal.butter(order, high_cut, btype='high', fs=fs, output='sos')
 
-def apply_eq(data, fs, gains):
-    low_b, low_a = butter_bandpass(20, 250, fs)
-    mid_b, mid_a = butter_bandpass(250, 4000, fs)
-    high_b, high_a = butter_bandpass(4000, 18000, fs)
+        self.gain_low = 1.0
+        self.gain_mid = 1.0
+        self.gain_high = 1.0
 
-    low = lfilter(low_b, low_a, data) * gains['bass']
-    mid = lfilter(mid_b, mid_a, data) * gains['mid']
-    high = lfilter(high_b, high_a, data) * gains['treble']
+    @staticmethod
+    def db_to_linear(db):
+        return 10 ** (db / 20.0)
 
-    return low + mid + high
+    def set_gain(self, low_db=0.0, mid_db=0.0, high_db=0.0):
+        self.gain_low = self.db_to_linear(low_db)
+        self.gain_mid = self.db_to_linear(mid_db)
+        self.gain_high = self.db_to_linear(high_db)
+
+    def process(self, x):
+        # Filter each band
+        low = signal.sosfilt(self.sos_low, x)
+        mid = signal.sosfilt(self.sos_mid, x)
+        high = signal.sosfilt(self.sos_high, x)
+
+        # Apply gains
+        out = self.gain_low * low + self.gain_mid * mid + self.gain_high * high
+        return out

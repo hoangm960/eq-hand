@@ -27,7 +27,7 @@ class AudioPlayer:
             chunk = self.samples[self.buffer_pos:self.buffer_pos + frames]
             self.buffer_pos += frames
         # apply eq
-        eq_chunk = au.apply_eq(chunk, self.fs, self.eq_controller.get_gains())
+        eq_chunk = self.eq_controller.process(chunk)
         # adjust volume
         eq_chunk *= self.volume
         eq_chunk = np.clip(eq_chunk, -1.0, 1.0)
