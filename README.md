@@ -28,15 +28,15 @@ If it prints None, then FFmpeg is not installed or not on the system path.
 
 **To Adjust Volume and EQ Settings:**
 1. **Initialize Hand Detector**
-   Press the "Initialize Hand Detection" in the top left
+   Press `Initialize Hand Detection` button in the top left
       1. First put all fingers up ✋, extend the thumb and index finger of the right hand as far as possible.
       2. Hold the right hand, close all 4 fingers of the left hand except for the thumb 👍, then squeeze the right hand's thumb and index finger as close as possible 🤏.
-      3. Now close the left thumb. The initialization is done. 
-
-2. **Activate Adjustment Mode**
+      3. Now close the left thumb. The initialization is done.
+2. **Insert music**
+   Press `Insert music` and choose your audio file then press ▶️ to play.
+3. **Activate Adjustment Mode**
    Signal the system with the **🤟 gesture** to turn **ON** the adjustment controls.
-
-3. **Make Your Changes**
+4. **Make Your Changes**
    Select your desired **EQ settings** and **volume level**.
     - **Left hand** select frequency band (bass, mid, treble):
       - Fist ✊: Bass
@@ -47,8 +47,5 @@ If it prints None, then FFmpeg is not installed or not on the system path.
     - **Right hand** control gain:
       - If frequency selected: distance between thumb and index finger 🤏
       - If overall volume selected: rotation of the wrist
-
-4. **Lock Your Settings**
+5. **Lock Your Settings**
    Signal the **🤟 gesture again** to **confirm and lock** the values.
-
-
