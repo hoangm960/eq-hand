@@ -85,3 +85,44 @@ class EQController:
         out = self.gain_low * low + self.gain_mid * mid + self.gain_high * high
 
         return self.apply_limiter(out)
+
+if __name__ == "__main__":
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    # Create EQ controller instance
+    eq_control = EQController(44100)
+
+    # Generate test sine waves at different frequencies
+    duration = 1.0  # seconds
+    t = np.linspace(0, duration, int(44100 * duration))
+
+    # Test frequencies for low, mid, and high bands
+    f_low = 100   # Hz
+    f_mid = 1000  # Hz
+    f_high = 5000 # Hz
+
+    # Generate sine waves
+    sine_low = np.sin(2 * np.pi * f_low * t)
+    sine_mid = np.sin(2 * np.pi * f_mid * t)
+    sine_high = np.sin(2 * np.pi * f_high * t)
+
+    # Mix signals
+    test_signal = sine_low + sine_mid + sine_high
+
+    # Set some EQ gains
+    eq_control.set_gain(low_db=-6.0, mid_db=0.0, high_db=-6.0)
+
+    # Process the signal
+    processed_signal = eq_control.process(test_signal)
+
+    # Plot the original and processed signals
+    plt.figure(figsize=(12, 6))
+    plt.plot(t, test_signal, label='Original Signal')
+    plt.plot(t, processed_signal, label='Processed Signal')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Amplitude')
+    plt.title('Original vs Processed Signal')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
