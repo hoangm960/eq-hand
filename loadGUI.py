@@ -68,6 +68,7 @@ class UI_Window(QMainWindow):
 
         if self.is_played:
             self.player.stop()
+            self.play_thread = None
         elif not self.play_thread:
             self.play_thread = threading.Thread(
                 target=self.player.play, daemon=True)
