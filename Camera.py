@@ -23,7 +23,7 @@ class Camera:
 
     def __init__(self, camera):
         self.camera = camera
-        self.detector = HandDetector(detectionCon=0.5, maxHands=2)
+        self.detector = HandDetector(detectionCon=0.7, maxHands=2)
 
         self.adjust_mode = False
         self.prev_toggle_state = False

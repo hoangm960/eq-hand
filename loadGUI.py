@@ -1,6 +1,6 @@
 import threading
 from PyQt6 import uic
-from PyQt6.QtCore import QTimer, pyqtSlot
+from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog
 from PyQt6.QtGui import QPixmap, QImage
 
@@ -39,7 +39,6 @@ class UI_Window(QMainWindow):
         self.low_freq_slider.valueChanged.connect(self.setLowFrequency)
         self.low_gain_slider.valueChanged.connect(self.setLowGain)
 
-    @pyqtSlot
     def start(self):
         if self.initialized:
             self.initialized = False
@@ -54,7 +53,6 @@ class UI_Window(QMainWindow):
 
         self.timer.start(int(1000/24))
 
-    @pyqtSlot
     def insertAudio(self):
         self.audio_file = QFileDialog.getOpenFileName(
             self,
@@ -66,73 +64,70 @@ class UI_Window(QMainWindow):
         if not self.audio_file:
             return
 
+        self.pauseAudio()
         self.eq_controller = EQController(44100)
         self.player = AudioPlayer(self.audio_file, self.eq_controller)
 
-    @pyqtSlot
+    def pauseAudio(self):
+        if self.player:
+            self.player.stop()
+            if self.play_thread:
+                self.play_thread = None
+
     def playAudio(self):
         if not self.player:
             return
 
         if self.is_played:
-            self.player.stop()
-            self.play_thread = None
+            self.pauseAudio()
         elif not self.play_thread:
             self.play_thread = threading.Thread(
                 target=self.player.play, daemon=True)
             self.play_thread.start()
         self.is_played = not self.is_played
 
-    @pyqtSlot
     def setVolume(self, value):
         if not self.player:
             return
 
         self.player.set_volume(value/100)
 
-    @pyqtSlot
     def setHighFrequency(self, value):
         if not self.eq_controller:
             return
 
         self.eq_controller.set_high_cut(value)
 
-    @pyqtSlot
     def setHighGain(self, value):
         if not self.eq_controller:
             return
 
         self.eq_controller.set_gain(high_db=value)
 
-    @pyqtSlot
     def setMidFrequency(self, value):
         if not self.eq_controller:
             return
 
         self.eq_controller.set_mid_bandwidth(value)
 
-    @pyqtSlot
     def setMidBandwidth(self, value):
         if not self.eq_controller:
             return
 
         self.eq_controller.set_mid_bandwidth(mid_bandwidth=value)
 
-    @pyqtSlot
     def setMidGain(self, value):
         if not self.eq_controller:
             return
 
         self.eq_controller.set_gain(mid_db=value)
 
-    @pyqtSlot
     def setLowFrequency(self, value):
         if not self.eq_controller:
             return
 
         self.eq_controller.set_low_cut(value)
 
-    @pyqtSlot
     def setLowGain(self, value):
         if not self.eq_controller:
             return
