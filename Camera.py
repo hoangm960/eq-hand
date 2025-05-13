@@ -29,6 +29,7 @@ class Camera:
         self.prev_toggle_state = False
         self.toggle_cooldown = 0
         self.right_hand_range = [0, 0]
+        self.palm_size = 0
 
     def open(self, width=720, height=480):
         self.vc = cv2.VideoCapture(self.camera)
@@ -77,16 +78,22 @@ class Camera:
             if gesture == "done":
                 return True
 
-            distance, info, frame_copy = self.detector.findDistance(
+            thumb_index_distance, _, frame_copy = self.detector.findDistance(
                 right_hand["lmList"][8][:-1],
                 right_hand["lmList"][4][:-1],
                 frame_copy
             )
 
+            self.palm_size, _, _ = self.detector.findDistance(
+                right_hand["lmList"][0][:-1],
+                right_hand["lmList"][5][:-1],
+                frame_copy
+            )
+
             if gesture == "min":
-                self.right_hand_range[0] = distance
+                self.right_hand_range[0] = thumb_index_distance
             else:
-                self.right_hand_range[1] = distance
+                self.right_hand_range[1] = thumb_index_distance
 
         return False
 
@@ -142,13 +149,21 @@ class Camera:
                                 angle_clamped - self.VOLUME_RANGE[0]) / (self.VOLUME_RANGE[1] - self.VOLUME_RANGE[0])
 
                         else:  # adjust the eq
-                            distance, info, frame_copy = self.detector.findDistance(
+                            thumb_index_distance, info, frame_copy = self.detector.findDistance(
                                 right_hand["lmList"][8][:-1],
                                 right_hand["lmList"][4][:-1],
                                 frame_copy
                             )
-                            gain = self.EQ_RANGE[0]+((distance-self.right_hand_range[0])*(
-                                self.EQ_RANGE[1]-self.EQ_RANGE[0]))/(self.right_hand_range[1]-self.right_hand_range[0])
+
+                            palm_size, _, _ = self.detector.findDistance(
+                                right_hand["lmList"][0][:-1],
+                                right_hand["lmList"][5][:-1],
+                                frame_copy
+                            )
+                            scale = palm_size / self.palm_size
+                            resized_range = [x*scale for x in self.right_hand_range]
+                            gain = self.EQ_RANGE[0]+((thumb_index_distance-resized_range[0])*(
+                                self.EQ_RANGE[1]-self.EQ_RANGE[0]))/(resized_range[1]-resized_range[0])
                         break
 
         return frame_copy, freq_band, gain, volume, self.adjust_mode
