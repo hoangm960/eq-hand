@@ -314,7 +314,7 @@ font-family: &quot;Helvetica&quot;; </string>
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -379,7 +379,7 @@ font-family: &quot;Helvetica&quot;; </string>
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -563,7 +563,7 @@ font-family: &quot;Helvetica&quot;; </string>
             <item>
              <widget class="QSlider" name="band_gain_slider">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -628,7 +628,7 @@ font-family: &quot;Helvetica&quot;; </string>
             <item>
              <widget class="QSlider" name="band_freq_slider">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -683,6 +683,12 @@ font-family: &quot;Helvetica&quot;; </string>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <widget class="QSlider" name="band_bandwidth_slider">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimum">
               <number>400</number>
              </property>
@@ -796,7 +802,7 @@ font-family: &quot;Helvetica&quot;; </string>
             <item>
              <widget class="QSlider" name="low_freq_slider">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -867,7 +873,7 @@ font-family: &quot;Helvetica&quot;; </string>
             <item>
              <widget class="QSlider" name="low_gain_slider">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1051,7 +1057,7 @@ font-family: &quot;Helvetica&quot;; </string>
             <item>
              <widget class="QSlider" name="high_gain_slider">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1092,7 +1098,7 @@ font-family: &quot;Helvetica&quot;; </string>
         <widget class="QLabel" name="band_label">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1112,7 +1118,7 @@ font-family: &quot;Helvetica&quot;; </string>
         <widget class="QLabel" name="low_label">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1132,7 +1138,7 @@ font-family: &quot;Helvetica&quot;; </string>
         <widget class="QLabel" name="high_label">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>

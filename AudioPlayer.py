@@ -18,7 +18,7 @@ class AudioPlayer:
         self.buffer_lock = threading.Lock()
 
     def callback(self, outdata, frames, time, status):
-        if self.stop_playback or self.buffer_pos + frames > len(self.samples):
+        if self.stop_playback or (self.buffer_pos + frames > len(self.samples)):
             outdata[:] = np.zeros((frames, 1))
             raise sd.CallbackStop()
 
